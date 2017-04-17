@@ -11,7 +11,7 @@ class SiteError extends ControllerSite {
      * @param int $ErrCode
      * @param string $message
      */
-    public function __construct($ErrCode = 500, $message = ''){
+    public function __construct($ErrCode = 500, $message = '') {
         parent::__construct();
 
         $tabCode = [
@@ -74,23 +74,23 @@ class SiteError extends ControllerSite {
             511 => ['label' => '511 Network Authentication Required', 'msg' => '511 Network Authentication Required']
         ];
 
-        if(isset($tabCode[$ErrCode])){
+        if (isset($tabCode[$ErrCode])) {
             header($_SERVER['SERVER_PROTOCOL'].' '.$tabCode[$ErrCode]['label']);
-            if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
                 $this->throwError('Erreur '.$tabCode[$ErrCode]['label'], 'Erreur_'.$ErrCode);
             }
             $erreur = $tabCode[$ErrCode]['msg'];
             $this->addData(['erreur' => $erreur]);
-        }else{
+        } else {
             header($_SERVER['SERVER_PROTOCOL'].' '.$tabCode[500]['label']);
-            if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
                 $this->throwError('Erreur '.$tabCode[500]['label'], 'Erreur_500');
             }
             $erreur = $tabCode[500]['msg'];
             $this->addData(['erreur' => $erreur]);
         }
 
-        if(!empty($message)){
+        if (!empty($message)) {
             $this->addData(['message' => $message]);
         }
 

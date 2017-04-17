@@ -12,7 +12,7 @@ class Model {
      */
     public static function insert(string $tableName, array $data){
         $req = BDD::instance()->prepare('INSERT INTO ' . $tableName . ' (' . implode(', ', array_keys($data)) . ') 
-                                         VALUES (' . ':'. implode(', :', array_keys($data)) . ')');
+                                         VALUES (' . ':' . implode(', :', array_keys($data)) . ')');
         $req->execute($data);
         return BDD::lastInsertId();
     }
@@ -28,12 +28,12 @@ class Model {
         $reqStr = 'UPDATE ' . $tableName . ' SET ';
         $lastKey = endKey($data);
         foreach ($data as $key => $value){
-            $reqStr .= $key.' = :'.$key;
+            $reqStr .= $key . ' = :' . $key;
             if($key != $lastKey) {
                 $reqStr .= ', ';
             }
         }
-        $reqStr .= ' WHERE '.$idColumn.' = :'.$idColumn;
+        $reqStr .= ' WHERE ' . $idColumn . ' = :' . $idColumn;
         $data[$idColumn] = $idValue;
 
         //echo $reqStr; exit();

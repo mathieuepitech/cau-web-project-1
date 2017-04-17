@@ -1,3 +1,3 @@
 <div>
-    Bonjour
+    Bonjour 2
 </div>

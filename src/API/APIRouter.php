@@ -4,11 +4,10 @@ namespace base\API;
 
 use base\Config;
 
-class APIRouter
-{
+class APIRouter {
 
     //Les méthodes HTTP gérée par l'API
-    const HTTP_METHODS = ['GET','POST','DELETE','PUT'];
+    const HTTP_METHODS = ['GET', 'POST', 'DELETE', 'PUT'];
 
     /**
      * APIRouter constructor.

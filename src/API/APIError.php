@@ -14,7 +14,6 @@ class APIError extends Controller {
      * @param string $code
      */
     public function __construct(int $ErrCode = 500, string $devMessage = 'Erreur inconnue', string $publicMessage = 'Une erreur inconnue s\'est produite', string $code = '') {
-
         parent::__construct();
 
         $tabCode = [

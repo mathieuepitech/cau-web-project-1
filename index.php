@@ -32,7 +32,6 @@ if (count($pages) > 1 && $pages[count($pages) - 1] == '')
     exit();
 }
 
-
 if ($pages[0] == 'api' && isset($pages[1]) && preg_match('#^([a-z]+)$#', $pages[1], $api1) && isset($pages[2]) && preg_match('#^([a-z-]+)$#', $pages[2], $api2)) {
     new APIRouter($api1[0], $api2[0]);
 

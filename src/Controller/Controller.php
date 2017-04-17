@@ -15,13 +15,13 @@ class Controller {
     protected function view() {
         ob_start();
         extract($this->data);
-        require 'src/View/'.str_replace('\\', '/', preg_replace('#^' . Config::NAMESPACE . '\\\Controller\\\#', '', get_class($this))).'.php';
+        require 'src/View/' . str_replace('\\', '/', preg_replace('#^' . Config::NAMESPACE . '\\\Controller\\\#', '', get_class($this))) . '.php';
         ob_end_flush();
         exit();
     }
 
     protected function addData($data) {
-        $this->data +=  $data;
+        $this->data += $data;
     }
 
     protected function returnJson($data) {

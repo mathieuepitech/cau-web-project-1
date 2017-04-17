@@ -4,7 +4,7 @@ namespace base\API;
 
 use base\Controller\Controller;
 
-class API extends Controller{
+class API extends Controller {
 
     private $declaredFunctions = [];
 

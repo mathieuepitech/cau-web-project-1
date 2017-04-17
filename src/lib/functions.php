@@ -114,17 +114,17 @@ function darkroom($img, $to, $width = 0, $height = 0, $quality = 100, $useGD = t
 function errorHandler($errno, $errstr, $errfile, $errline) {
     if (!(error_reporting() & $errno)) {
         // Ce code d'erreur n'est pas inclus dans error_reporting()
-        return;
+        return ;
     }
 
     // Insertion des logs
-//    \base\Model\Logs::insert('eldo', $errno, $errstr, $errfile, $errline, date('Y-m-d H:i:s'));
+    \base\Model\Logs::insert($errno, $errstr, $errfile, $errline, date('Y-m-d H:i:s'));
     
     ob_clean();
     new \base\Controller\Site\SiteError(500);
 
     /* Ne pas exécuter le gestionnaire interne de PHP */
-    return;
+    return ;
 }
 
 /**
@@ -383,6 +383,15 @@ function cleanArray(array $data) {
         }
     }
     return $data;
+}
+
+/**
+ * @param $array
+ * @return mixed
+ */
+function endKey($array){
+    end($array);
+    return key($array);
 }
 
 ?>

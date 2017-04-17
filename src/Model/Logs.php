@@ -7,12 +7,10 @@ use PDO;
 class Logs {
 
     public $id;
-    public $site;
     public $level;
     public $message;
     public $file;
     public $line;
-    public $user;
     public $date;
 
     const ERROR_LEVEL = [
@@ -36,22 +34,19 @@ class Logs {
 
     /**
      * Logs constructor.
-     * @param int $id
-     * @param string $site
-     * @param string $level
-     * @param string $message
-     * @param string $file
-     * @param string $line
-     * @param string $date
+     * @param int|null $id
+     * @param string|null $level
+     * @param string|null $message
+     * @param string|null $file
+     * @param string|null $line
+     * @param string|null $date
      */
-    public function __construct(int $id = null, string $site = null, string $level = null, string $message = null,
-                                string $file = null, string $line = null, string $date = null)
+    public function __construct(int $id = null, string $level = null, string $message = null, string $file = null, string $line = null, string $date = null)
     {
         if ($id === NULL) {
             return;
         }
         $this->id = $id;
-        $this->site = $site;
         $this->level = $level;
         $this->message = $message;
         $this->file = $file;
@@ -60,10 +55,14 @@ class Logs {
     }
 
 
-    public static function insert($site, $level, $message, $file, $line, $date) {
-        $user = NULL;
-        $req = BDD::instance()->prepare('INSERT INTO '.BDTables::LOGS.'(site, level, message, date, file, line) VALUES(:site, :level, :message, :date, :file, :line)');
-        $req->execute(['site' => $site, 'level' => $level, 'message' => $message, 'date' => $date, 'file' => $file, 'line' => $line]);
+    public static function insert($level, $message, $file, $line, $date) {
+        Model::insert(BDTables::LOGS, [
+            'level' => $level,
+            'message' => $message,
+            'file' => $file,
+            'line' => $line,
+            'date' => date("Y-m-d H:i:s", strtotime($date))
+        ]);
     }
 
     /**
@@ -72,15 +71,16 @@ class Logs {
      * @return array
      */
     public static function getLastLogs(int $limit){
-        $req = BDD::instance()->prepare('SELECT l.*
-                                         FROM '.BDTables::LOGS.' l 
-                                         ORDER BY date DESC LIMIT :limit');
+        $req = BDD::instance()->prepare('SELECT *
+                                         FROM ' . BDTables::LOGS . ' 
+                                         ORDER BY date DESC
+                                         LIMIT :limit');
         $req->bindValue('limit', $limit, PDO::PARAM_INT);
         $req->execute();
         $return = [];
 
         foreach ($req->fetchAll() as $l){
-            $log = new Logs($l['id'], $l['site'], $l['level'], $l['message'], $l['file'], $l['line'], $l['date']);
+            $log = new Logs($l['id'], $l['level'], $l['message'], $l['file'], $l['line'], $l['date']);
             $return[] = $log;
         }
 
@@ -101,22 +101,6 @@ class Logs {
     public function setId($id)
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSite()
-    {
-        return htmlspecialchars($this->site);
-    }
-
-    /**
-     * @param string $site
-     */
-    public function setSite($site)
-    {
-        $this->site = $site;
     }
 
     /**
@@ -203,7 +187,8 @@ class Logs {
      * Retourne le type d'erreur en string (label)
      * @return string
      */
-    public function getErrorLabel(){
+    public function getErrorLabel()
+    {
         return htmlspecialchars(self::ERROR_LEVEL[$this->level]);
     }
 }

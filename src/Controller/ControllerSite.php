@@ -31,7 +31,7 @@ class ControllerSite {
             require 'src/View/Site/tpl/head.php';
         }
 
-        require 'src/View/'.str_replace('\\', '/', preg_replace('#^' . Config::NAMESPACE . '\\\Controller\\\#', '', get_class($this))).'.php';
+        require 'src/View/'.str_replace('\\', '/', preg_replace('#^' . Config::NAMESPACE . '\\\Controller\\\#', '', get_class($this))) . '.php';
 
         if ($footer) {
             require 'src/View/Site/tpl/footer.php';

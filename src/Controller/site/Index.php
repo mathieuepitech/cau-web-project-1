@@ -9,9 +9,15 @@ class Index extends ControllerSite {
     /**
      * Index constructor.
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
+
+        $this->addHead([
+        ]);
+
+        $this->addFooter([
+
+        ]);
 
         $this->addData([]);
         $this->view();

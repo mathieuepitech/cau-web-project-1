@@ -5,12 +5,11 @@ namespace base\Model;
 use Exception;
 use PDO;
 
-class BDD
-{
-    const SQL_SERVER = 'localhost';
-    const SQL_LOGIN = 'root';
-    const SQL_PASSWORD = '';
-    const SQL_DB = 'eldotravo';
+class BDD {
+    const SQL_SERVER = 'localhost';     // BDD Server
+    const SQL_LOGIN = 'root';           // BDD Login
+    const SQL_PASSWORD = '';            // BDD Password
+    const SQL_DB = 'base';              // BDD Name
 
     private static $bdd;
 
@@ -22,10 +21,11 @@ class BDD
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ];
 
-            self::$bdd = new PDO('mysql:host='.self::SQL_SERVER.';dbname='.self::SQL_DB.';charset=utf8', self::SQL_LOGIN, self::SQL_PASSWORD, $pdo_options);
+            self::$bdd = new PDO('mysql:host=' . self::SQL_SERVER . ';dbname=' . self::SQL_DB.';charset=utf8',
+                self::SQL_LOGIN, self::SQL_PASSWORD, $pdo_options);
         }
-        catch(Exception $e) {
-            die('Erreur : '.$e->getMessage());
+        catch (Exception $e) {
+            die('Erreur : ' . $e->getMessage());
         }
     }
 
