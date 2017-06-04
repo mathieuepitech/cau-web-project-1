@@ -7,15 +7,15 @@ RewriteCond %{ENV:REDIRECT_END} ^1$
 RewriteRule ^ - [L]
 
 # Redirection non-www vers www
-#RewriteCond %{HTTP_HOST} ^eldotravo.fr$
-#RewriteRule ^(.*)$ http://www.eldotravo.fr/$1 [R=301,L,E=END:1]
+# RewriteCond %{HTTP_HOST} ^eldotravo.fr$
+# RewriteRule ^(.*)$ http://www.eldotravo.fr/$1 [R=301,L,E=END:1]
 
 # Redirection des fichiers static pour www.eldotravo.fr
 RewriteCond %{HTTP_HOST} ^test.dev$
 RewriteCond %{DOCUMENT_ROOT}/static%{REQUEST_URI} -f
 RewriteRule ^(.*)$ static/$1 [L,E=END:1]
 
-#RewriteRule ^haute-garonne/toulouse/installation-entretien-climatisation /haute-garonne/toulouse/climatisation.php [L]
+# RewriteRule ^haute-garonne/toulouse/installation-entretien-climatisation /haute-garonne/toulouse/climatisation.php [L]
 
 # Redirection de toutes les requêtes vers Index.php
 RewriteRule ^ index.php [L,E=END:1]
