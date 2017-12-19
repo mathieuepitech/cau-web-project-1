@@ -15,25 +15,26 @@
     <title><?= $this->head['title'] ?></title>
     <meta name="description" content="<?= $this->head['description'] ?>">
 
-    <meta property="og:title"              content="<?= $this->head['title'] ?>" />
-    <meta property="og:description"        content="<?= $this->head['description'] ?>" />
-    <meta property="og:url"                content="https://<?= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ?>" />
-    <meta property="og:image"              content="https://<?= $_SERVER['SERVER_NAME'] . \base\Config::FAVICON_PATH ?>" />
-<!--    <meta property="fb:app_id"              content="1000452166691027" /> -->
+    <meta property="og:title" content="<?= $this->head['title'] ?>"/>
+    <meta property="og:description" content="<?= $this->head['description'] ?>"/>
+    <meta property="og:url" content="https://<?= $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] ?>"/>
+    <meta property="og:image" content="https://<?= $_SERVER['SERVER_NAME'] . \base\Config::FAVICON_PATH ?>"/>
+    <!--    <meta property="fb:app_id"              content="1000452166691027" /> -->
 
-    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700%7CRoboto+Condensed:400,700%7CMaterial+Icons' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700%7CRoboto+Condensed:400,700%7CMaterial+Icons'
+          rel='stylesheet' type='text/css'>
 
     <link href="/css/theme.css?v=<?= base\Config::SITE_CSS_VERSION ?>" rel="stylesheet">
     <link href="/css/select2.css" rel="stylesheet">
 
-    <link rel="image_src" href="<?php \base\Config::FAVICON_PATH ?>" />
-    <link rel="icon" type="image/png" href="<?php \base\Config::FAVICON_PATH ?>" />
+    <link rel="image_src" href="<?php \base\Config::FAVICON_PATH ?>"/>
+    <link rel="icon" type="image/png" href="<?php \base\Config::FAVICON_PATH ?>"/>
 
     <meta name="theme-color" content="#ffffff">
 
-    <?php if (isset($this->head['robotNoIndex']) && $this->head['robotNoIndex'] == true) { ?>
-        <meta name="robots" content="noindex" />
-    <?php } ?>
+	<?php if ( isset( $this->head['robotNoIndex'] ) && $this->head['robotNoIndex'] == true ) { ?>
+        <meta name="robots" content="noindex"/>
+	<?php } ?>
 
 </head>
 
