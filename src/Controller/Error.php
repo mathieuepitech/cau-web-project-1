@@ -1,6 +1,6 @@
 <?php
 
-namespace base\Controller;
+namespace WebProjectFitness\Controller;
 
 class Error extends Controller {
 

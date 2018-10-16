@@ -1,6 +1,6 @@
 <?php
 
-include( 'src/lib/mail/PHPMailerAutoload.php' );
+include( 'src/Lib/mail/PHPMailerAutoload.php' );
 
 /**
  * Permet de remplacer les accents et les apostrophes dans l'url
@@ -125,10 +125,10 @@ function errorHandler( $errno, $errstr, $errfile, $errline ) {
 	}
 
 	// Insertion des logs
-	\base\Model\Logs::insert( $errno, $errstr, $errfile, $errline, date( 'Y-m-d H:i:s' ) );
+	\WebProjectFitness\Model\Logs::insert( $errno, $errstr, $errfile, $errline, date( 'Y-m-d H:i:s' ) );
 
 	ob_clean();
-	new \base\Controller\Site\SiteError( 500 );
+	new \WebProjectFitness\Controller\Site\SiteError( 500 );
 
 	/* Ne pas exécuter le gestionnaire interne de PHP */
 

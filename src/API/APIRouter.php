@@ -1,8 +1,8 @@
 <?php
 
-namespace base\API;
+namespace WebProjectFitness\API;
 
-use base\Config;
+use WebProjectFitness\Config;
 
 class APIRouter {
 

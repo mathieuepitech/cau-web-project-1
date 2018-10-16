@@ -1,6 +1,6 @@
 <?php
 
-namespace base;
+namespace WebProjectFitness;
 
 class Config {
 	const SITE_JS_VERSION = '1.00';
@@ -8,7 +8,7 @@ class Config {
 
 	const TITLE_HEADER = 'Mon titre de site';
 	const DESCRIPTION_HEADER = 'Ma description pour les robots';
-	const NAMESPACE = 'base';
+	const NAMESPACE = 'WebProjectFitness';
 
 	const FAVICON_PATH = '/img/favicon.png';
 }

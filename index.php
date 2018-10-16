@@ -1,18 +1,18 @@
 <?php
 
-namespace base;
+namespace WebProjectFitness;
 
-use base\API\APIRouter;
-use base\Controller\Error;
-use base\Controller\Site\SiteRouter;
-use base\Model\BDD;
+use WebProjectFitness\API\APIRouter;
+use WebProjectFitness\Controller\Error;
+use WebProjectFitness\Controller\Site\SiteRouter;
+use WebProjectFitness\Model\BDD;
 
 session_start();
 date_default_timezone_set( 'Europe/Paris' );
 setlocale( LC_TIME, "fr_FR.UTF-8" );
 error_reporting( E_ALL );
 
-require( 'src/lib/functions.php' );
+require('src/Lib/functions.php');
 require( 'src/config.php' );
 
 require 'src/Autoloader.php';

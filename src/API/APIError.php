@@ -1,8 +1,8 @@
 <?php
 
-namespace base\API;
+namespace WebProjectFitness\API;
 
-use base\Controller\Controller;
+use WebProjectFitness\Controller\Controller;
 
 class APIError extends Controller {
 

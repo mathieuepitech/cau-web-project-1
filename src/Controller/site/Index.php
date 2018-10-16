@@ -1,8 +1,8 @@
 <?php
 
-namespace base\Controller\Site;
+namespace WebProjectFitness\Controller\Site;
 
-use base\Controller\ControllerSite;
+use WebProjectFitness\Controller\ControllerSite;
 
 class Index extends ControllerSite {
 

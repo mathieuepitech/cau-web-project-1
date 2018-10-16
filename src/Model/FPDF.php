@@ -7,7 +7,7 @@
  * Author:  Olivier PLATHEY                                                     *
  *******************************************************************************/
 
-namespace base\Model;
+namespace WebProjectFitness\Model;
 define( 'FPDF_VERSION', '1.81' );
 
 class FPDF {

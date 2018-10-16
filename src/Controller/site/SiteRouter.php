@@ -1,6 +1,6 @@
 <?php
 
-namespace base\Controller\Site;
+namespace WebProjectFitness\Controller\Site;
 
 class SiteRouter {
 

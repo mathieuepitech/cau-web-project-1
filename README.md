@@ -1,2 +1,2 @@
-# base
-Base for a new from scratch website
+# Web Project for Chung-Ang University web courses
+

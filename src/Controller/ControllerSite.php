@@ -1,8 +1,8 @@
 <?php
 
-namespace base\Controller;
+namespace WebProjectFitness\Controller;
 
-use base\Config;
+use WebProjectFitness\Config;
 
 class ControllerSite {
 

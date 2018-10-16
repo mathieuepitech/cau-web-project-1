@@ -1,6 +1,6 @@
 <?php
 
-namespace base\Model;
+namespace WebProjectFitness\Model;
 
 abstract class BDTables {
 
