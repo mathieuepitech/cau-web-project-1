@@ -1,2 +1,1 @@
-# Web Project for Chung-Ang University web courses
-
+# First web project for CAU
