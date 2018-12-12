@@ -6,22 +6,22 @@ use WebProjectFitness\Controller\ControllerSite;
 
 class Index extends ControllerSite {
 
-	/**
-	 * Index constructor.
-	 */
-	public function __construct() {
-		parent::__construct();
+    /**
+     * Index constructor.
+     */
+    public function __construct() {
+        parent::__construct();
 
-		$this->addHead( [
-		] );
+        $this->addHead( [
+        ] );
 
-		$this->addFooter( [
+        $this->addFooter( [
 
-		] );
+        ] );
 
-		$this->addData( [] );
-		$this->view();
-	}
+        $this->addData( [] );
+        $this->view();
+    }
 }
 
 ?>

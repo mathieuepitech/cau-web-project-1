@@ -10,8 +10,13 @@ RewriteRule ^ - [L]
 # RewriteCond %{HTTP_HOST} ^eldotravo.fr$
 # RewriteRule ^(.*)$ http://www.eldotravo.fr/$1 [R=301,L,E=END:1]
 
-# Redirection des fichiers static pour www.eldotravo.fr
+# Redirection des fichiers static pour fitness.sanchez-mathieu.fr
 RewriteCond %{HTTP_HOST} ^fitness.sanchez-mathieu.fr$
+RewriteCond %{DOCUMENT_ROOT}/static%{REQUEST_URI} -f
+RewriteRule ^(.*)$ static/$1 [L,E=END:1]
+
+# Redirection des fichiers static pour fitness.sanchez-mathieu.test
+RewriteCond %{HTTP_HOST} ^fitness.sanchez-mathieu.test$
 RewriteCond %{DOCUMENT_ROOT}/static%{REQUEST_URI} -f
 RewriteRule ^(.*)$ static/$1 [L,E=END:1]
 
