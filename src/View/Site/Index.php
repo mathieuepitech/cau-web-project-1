@@ -1,10 +1,10 @@
 <div class="row" style="margin-bottom: 0">
     <div class="col s2 green lighten-1 white-text" style="height: 750px;">
         <div class="row">
-            <div class="col s12 center-align">
+            <div class="col l3 m4 s6 center-align">
                 <h5>Selected part of the body</h5>
             </div>
-            <div class="col s12">
+            <div class="col l9 m8 s6">
                 <img src="/img/muscles.jpg" style="width: 100%;">
             </div>
             <div class="col s12" id="list-exercices-select-part">
