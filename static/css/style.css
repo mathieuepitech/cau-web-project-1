@@ -26,4 +26,9 @@
     height: 10px;
     border-radius: 50%;
     cursor: pointer;
+    display: none;
+}
+
+#point-container.start .point {
+    display: inherit;
 }

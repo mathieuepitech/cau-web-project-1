@@ -23,8 +23,9 @@ let pointConfig = [
 
 let Point = ( function () {
 
-    let Point = function ( conf ) {
+    let Point = function ( conf, callback ) {
         this.config = conf;
+        this.callback = callback;
         this.addSpecificCSS();
         this.adHtml();
     };
@@ -36,7 +37,6 @@ let Point = ( function () {
         let css = `<style id="point-css">`;
 
         for ( let conf of this.config ) {
-            console.log( conf );
             css += `
                 .${ conf.title }-css {
                     animation: ${ conf.title }-animation 1s linear 0s infinite normal none running;
@@ -82,10 +82,13 @@ let Point = ( function () {
             html += `<div class="blue darken-3 point ${ conf.title }-css ${ conf.noAnim ? "stop" : "" }"></div>`;
         }
         container.append( html.replace( /  |\n/g, "" ) );
+        this.callback( this );
     };
 
     proto.start = function () {
+        let container = $( "#point-container" );
 
+        container.addClass( "start" );
     };
 
     return Point;
@@ -95,6 +98,11 @@ $( document ).ready( () => {
 
     $( ".dropdown-trigger" ).dropdown();
 
-    // let point = new Point( pointConfig );
+    let point;
+
+    new Point( pointConfig, ( p ) => {
+        point = p;
+        point.start();
+    } );
 
 } );
