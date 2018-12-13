@@ -28,7 +28,7 @@ class Model {
      * @param string $idColumn
      * @param int $idValue
      */
-    public static function update( string $tableName, array $data, string $idColumn, int $idValue ) {
+    public static function update( string $tableName, array $data, string $idColumn, string $idValue ) {
         $reqStr = 'UPDATE ' . $tableName . ' SET ';
         $lastKey = endKey( $data );
         foreach ( $data as $key => $value ) {
@@ -39,6 +39,40 @@ class Model {
         }
         $reqStr .= ' WHERE ' . $idColumn . ' = :' . $idColumn;
         $data[ $idColumn ] = $idValue;
+
+        //echo $reqStr; exit();
+
+        $req = BDD::instance()->prepare( $reqStr );
+        $req->execute( $data );
+    }
+
+    public static function delete (string $tableName, array $data){
+        $reqStr = 'DELETE FROM ' . $tableName . ' WHERE ';
+        $lastKey = endKey( $data );
+        foreach ( $data as $key => $value ) {
+            $reqStr .= $key . ' = :' . $key;
+            if ( $key != $lastKey ) {
+                $reqStr .= ' AND ';
+            }
+        }
+
+        //echo $reqStr; exit();
+
+        $req = BDD::instance()->prepare( $reqStr );
+        $req->execute( $data );
+
+    }
+
+    public static function update_order( string $tableName, array $data, string $newOrder) {
+        $reqStr = 'UPDATE ' . $tableName . ' SET id_order = :newOrder WHERE ';
+        $lastKey = endKey( $data );
+        foreach ( $data as $key => $value ) {
+            $reqStr .= $key . ' = :' . $key;
+            if ( $key != $lastKey ) {
+                $reqStr .= ' AND ';
+            }
+        }
+        $data[ 'newOrder' ] = $newOrder;
 
         //echo $reqStr; exit();
 
