@@ -10,7 +10,7 @@
 </footer>
 
 <script src="/js/jquery-3.3.1.min.js"></script>
-<script async src="/js/materialize.min.js"></script>
+<script src="/js/materialize.min.js"></script>
 <script async src="/js/javascript.js?v=<?= WebProjectFitness\Config::SITE_JS_VERSION ?>"></script>
 
 </body>

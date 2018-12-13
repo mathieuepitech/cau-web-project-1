@@ -13,3 +13,17 @@
     border-radius: 5px;
     padding: 10px 15px;
 }
+
+#point-container {
+    position: relative;
+}
+
+/* Selector point */
+#point-container .point {
+    position: absolute;
+    background: red;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+}
