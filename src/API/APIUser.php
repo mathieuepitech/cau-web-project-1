@@ -2,16 +2,19 @@
 
 namespace WebProjectFitness\API;
 
+use WebProjectFitness\Model\BDTables;
+use WebProjectFitness\Model\Model;
+
 class APIUser extends API {
 
     private $declaredFunctions = [
         'create' => [
-            'method' => 'POST',
+            'method' => 'GET',
             'params' => [
-                'id' => [
-                    'required' => true,
-                    'type' => 'string'
-                ]
+//                'id' => [
+//                    'required' => true,
+//                    'type' => 'string'
+//                ]
             ]
         ]
     ];
@@ -21,7 +24,11 @@ class APIUser extends API {
     }
 
     public function create( $data ) {
-        $this->returnJson( [ 'body' => 'truc', 'id' => $data[ 'id' ] ] );
+        Model::insert( BDTables::USER, [
+            "name" => "Mathi",
+            "user_id" => "bite"
+        ] );
+        $this->returnJson( [ 'body' => 'truc' ] );
     }
 
 }

@@ -8,6 +8,10 @@ abstract class BDTables {
     // Ex : const ABONNEMENT = 'abonnement';
 
     const LOGS = "logs";
+    const USER = "user";
+    const FAVORITE = "favorite";
+    const EXERCISE = "exercise";
+    const TRAINING = "training";
 }
 
 ?>
