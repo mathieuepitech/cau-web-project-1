@@ -46,7 +46,7 @@ class Model {
         $req->execute( $data );
     }
 
-    public static function delete (string $tableName, array $data){
+    public static function delete( string $tableName, array $data ) {
         $reqStr = 'DELETE FROM ' . $tableName . ' WHERE ';
         $lastKey = endKey( $data );
         foreach ( $data as $key => $value ) {
@@ -63,7 +63,7 @@ class Model {
 
     }
 
-    public static function update_order( string $tableName, array $data, string $newOrder) {
+    public static function update_order( string $tableName, array $data, string $newOrder ) {
         $reqStr = 'UPDATE ' . $tableName . ' SET id_order = :newOrder WHERE ';
         $lastKey = endKey( $data );
         foreach ( $data as $key => $value ) {

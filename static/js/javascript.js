@@ -1,23 +1,49 @@
 let pointConfig = [
     {
-        title: "Test",
+        title: "Shoulder",
         top: 45,
         left: 80,
     },
     {
-        title: "Test3",
-        top: 125,
-        left: 53,
-    },
-    {
-        title: "Test4",
+        title: "Biceps",
         top: 85,
         left: 170,
     },
     {
-        title: "Test5",
+        title: "Abs",
         top: 115,
         left: 121,
+    },
+    {
+        title: "Quadriceps",
+        top: 200,
+        left: 146,
+    },
+    {
+        title: "Back",
+        top: 75,
+        left: 347,
+    },
+    {
+        title: "Shoulder",
+        second: "1",
+        top: 43,
+        left: 392,
+    },
+    {
+        title: "Buttocks",
+        top: 145,
+        left: 327,
+    },
+    {
+        title: "Triceps",
+        top: 76,
+        left: 300,
+    },
+    {
+        title: "Hamstrings",
+        top: 208,
+        left: 375,
     },
 ];
 
@@ -25,6 +51,13 @@ let Point = ( function () {
 
     let Point = function ( conf, callback ) {
         this.config = conf;
+        for ( let i = 0; i < this.config.length; i++ ) {
+            if ( this.config[ i ].second ) {
+                this.config[ i ].class = this.config[ i ].title.toLowerCase() + this.config[ i ].second;
+            } else {
+                this.config[ i ].class = this.config[ i ].title.toLowerCase();
+            }
+        }
         this.callback = callback;
         this.addSpecificCSS();
         this.adHtml();
@@ -38,15 +71,15 @@ let Point = ( function () {
 
         for ( let conf of this.config ) {
             css += `
-                .${ conf.title }-css {
-                    animation: ${ conf.title }-animation 1s linear 0s infinite normal none running;
+                .${ conf.class }-css {
+                    animation: ${ conf.class }-animation 1s linear 0s infinite normal none running;
                     top: ${ conf.top }px;
                     left: ${ conf.left }px;
                 }
-                .${ conf.title }-css.stop {
+                .${ conf.class }-css.stop {
                     animation: none;
                 }
-                @keyframes ${ conf.title }-animation {
+                @keyframes ${ conf.class }-animation {
                     0% {
                         width: 10px;
                         height: 10px;
@@ -79,22 +112,102 @@ let Point = ( function () {
         let html = ``;
 
         for ( let conf of this.config ) {
-            html += `<div class="blue darken-3 point ${ conf.title }-css ${ conf.noAnim ? "stop" : "" }"></div>`;
+            html += `<div data-name="${ conf.title.toLowerCase() }" title="${ conf.title }" class="blue darken-3 point ${ conf.class }-css${ conf.noAnim ? " stop" : "" }"><div></div></div>`;
         }
         container.append( html.replace( /  |\n/g, "" ) );
         this.callback( this );
+    };
+
+    proto.listen = function () {
+        // Click on a point not selected
+        $( document ).on( "click", ".point:not(.selected)", ( elem ) => {
+            let $elem = $( elem.target );
+
+            $( ".point" ).each( ( i, e ) => {
+                let $e = $( e );
+
+                $e.removeClass( "selected" );
+            } );
+
+            $elem.addClass( "selected" );
+            $( "#exercise-title" ).text( $elem.attr( "title" ) );
+            $.ajax( {
+                url: "/api/muscles/get-list",
+                method: "POST",
+                data: {
+                    muscle: $elem.data( "name" )
+                },
+                success: function ( data ) {
+                    let c = $( "#exercises-container" );
+
+                    data = JSON.parse( data );
+                    localStorage.setItem( $elem.data( "name" ), data );
+                    c.empty();
+                    if ( data.length > 0 ) {
+                        for ( let exercise of data ) {
+                            c.append( `<div data-id="${ exercise.id }">${ exercise.title }</div>` );
+                        }
+                    } else {
+                        c.append( "<div>Please select a muscle</div>" );
+                    }
+                }
+            } );
+        } );
+
+        // Click on a point selected
+        $( document ).on( "click", ".point.selected", ( elem ) => {
+            let $elem = $( elem.currentTarget );
+            let c = $( "#exercises-container" );
+
+            $elem.removeClass( "selected" );
+            $( "#exercise-title" ).text( "Selected part of the body" );
+            c.html( "<div>Please select a muscle</div>" );
+        } );
+
+        // Click on an exercise
+        $( document ).on( "click", "#exercises-container div", ( elem ) => {
+            let $elem = $( elem.target );
+
+            if ( $elem.data( "id" ) ) {
+                $.ajax( {
+                    url: "/api/muscles/get-exercise",
+                    method: "POST",
+                    data: {
+                        id: $elem.data( "id" ),
+                    },
+                    success: function ( data ) {
+                        data = JSON.parse( data );
+                        let main = $( "#main-container" );
+
+                        main.html( `
+                                <h2>${ data.title }</h2>
+                                <div class="center-align">
+                                    <iframe width="560" height="315" src="${ data.video.replace( "https://youtu.be/", "https://www.youtube.com/embed/" ) }" frameborder="0"
+                                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen></iframe>
+                                    <div class="exercise-info-container blue-grey lighten-4 left-align">${ ( data.description ? data.description : "" ) }</div>
+                                </div>
+                        ` );
+                    }
+                } );
+            }
+        } );
     };
 
     proto.start = function () {
         let container = $( "#point-container" );
 
         container.addClass( "start" );
+        this.listen();
     };
 
     return Point;
 }() );
 
 $( document ).ready( () => {
+
+    let userId = localStorage.getItem( "userId" );
+    let userName = localStorage.getItem( "userName" );
 
     $( ".dropdown-trigger" ).dropdown();
 
@@ -103,6 +216,60 @@ $( document ).ready( () => {
     new Point( pointConfig, ( p ) => {
         point = p;
         point.start();
+    } );
+
+    if ( userId === null ) {
+        $.ajax( {
+            url: "/api/user/create",
+            method: "POST",
+            success: function ( data ) {
+                localStorage.setItem( "userId", data.id );
+                userId = data.id;
+            }, error: function () {
+            }
+        } );
+    }
+    if ( userName !== null ) {
+        $( "a[data-target=user]" ).html( userName + `<i class="material-icons right">arrow_drop_down</i>` );
+    }
+
+    $( document ).on( "click", "#change-name", function () {
+        let modal = $( "#modal" );
+
+        modal.find( ".md-title" ).text( "Change Your Name" );
+        modal.find( ".md-container" ).html( `
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="name" type="text" class="validate" value="${ userName !== null ? userName : "" }">
+                    <label for="name" ${ userName !== null ? `class="active"` : "" }>Your Name</label>
+                </div>
+            </div>
+        ` );
+
+        modal.find( "#md-validate" ).click( () => {
+            $.ajax( {
+                url: "/api/user/modify",
+                method: "POST",
+                data: {
+                    "user_id": userId,
+                    "name": $( "#name" ).val()
+                },
+                success: function ( data ) {
+                    localStorage.setItem( "userId", data.is );
+                    localStorage.setItem( "userName", data.name );
+                    $( "a[data-target=user]" ).html( data.name + `<i class="material-icons right">arrow_drop_down</i>` );
+                    modal.removeClass( "md-show" );
+                    modal.find( "md-title" ).empty();
+                    modal.find( ".md-container" ).empty();
+                },
+            } );
+        } );
+        modal.find( "#md-cancel" ).click( () => {
+            modal.removeClass( "md-show" );
+            modal.find( "md-title" ).empty();
+            modal.find( ".md-container" ).empty();
+        } );
+        modal.addClass( "md-show" );
     } );
 
 } );

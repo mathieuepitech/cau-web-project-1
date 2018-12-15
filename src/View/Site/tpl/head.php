@@ -25,6 +25,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700%7CRoboto+Condensed:400,700%7CMaterial+Icons'
           rel='stylesheet' type='text/css'>
     <link href="/css/materialize.min.css" rel="stylesheet">
+    <link href="/css/modal.css" rel="stylesheet">
 
     <link href="/css/style.css?v=<?= WebProjectFitness\Config::SITE_CSS_VERSION ?>" rel="stylesheet">
 
@@ -43,7 +44,7 @@
 <body class="grey lighten-4">
 
 <ul id="user" class="dropdown-content">
-    <li><a>Your Account</a></li>
+    <li><a id="change-name">Change Your Name</a></li>
     <li class="divider"></li>
     <li><a>Your Saved Exercises</a></li>
     <li class="divider"></li>
@@ -59,7 +60,7 @@
 
             <ul class="right hide-on-med-and-down">
                 <li>
-                    <a class="dropdown-trigger" data-target="user">Name Of The Account<i class="material-icons right">arrow_drop_down</i></a>
+                    <a class="dropdown-trigger" data-target="user">Your Account<i class="material-icons right">arrow_drop_down</i></a>
                 </li>
             </ul>
         </div>

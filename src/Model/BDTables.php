@@ -12,6 +12,7 @@ abstract class BDTables {
     const FAVORITE = "favorite";
     const EXERCISE = "exercise";
     const TRAINING = "training";
+    const MUSCLES = "muscles";
 }
 
 ?>

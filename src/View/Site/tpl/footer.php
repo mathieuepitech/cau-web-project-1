@@ -1,5 +1,23 @@
 </main>
 
+<div id="modal" class="md-modal">
+    <div class="md-content">
+
+        <h3 class="md-header md-title"></h3>
+
+        <div class="md-container row">
+        </div>
+
+        <div class="md-footer">
+            <a class="waves-effect waves-green btn-flat" id="md-validate">Validate</a>
+            <a class="waves-effect waves-red btn-flat" id="md-cancel">Cancel</a>
+        </div>
+
+    </div>
+</div>
+<div class="md-overlay"></div>
+
+
 <footer class="page-footer green darken-3">
     <div class="footer-copyright">
         <div class="container">
