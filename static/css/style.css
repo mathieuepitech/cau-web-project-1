@@ -58,3 +58,8 @@
 #exercises-container div.selected {
     cursor: pointer;
 }
+
+.favorite img {
+    height: 30px;
+    cursor: pointer;
+}

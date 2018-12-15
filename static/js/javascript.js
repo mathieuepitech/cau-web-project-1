@@ -202,8 +202,19 @@ let Point = ( function () {
                 if ( storageData[ $elem.data( "id" ) ] ) {
                     let data = storageData[ $elem.data( "id" ) ];
                     let main = $( "#main-container" );
+                    let favStorage = localStorage.getItem( "fav" );
+
+                    if ( favStorage ) {
+                        favStorage = JSON.parse( favStorage );
+                    } else {
+                        favStorage = {};
+                    }
+                    let fav = favStorage[ $elem.data( "id" ) ];
 
                     main.html( `
+                                <div data-id="${ $elem.data( "id" ) }" data-fav="${ fav ? "true" : "false" }" class="right favorite">
+                                    <img src="/img/${ fav ? "" : "no-" }favorite.png" alt="">
+                                </div>
                                 <h2>${ data.title }</h2>
                                 <div class="center-align">
                                     <iframe width="560" height="315" src="${ data.video.replace( "https://youtu.be/", "https://www.youtube.com/embed/" ) }" frameborder="0"
@@ -226,8 +237,18 @@ let Point = ( function () {
                             localStorage.setItem( "exercises", JSON.stringify( storageData ) );
 
                             let main = $( "#main-container" );
+                            let favStorage = localStorage.getItem( "fav" );
+
+                            if ( favStorage ) {
+                                favStorage = JSON.parse( favStorage );
+                            } else {
+                                favStorage = {};
+                            }
 
                             main.html( `
+                                <div data-id="${ $elem.data( "id" ) }" data-fav="false" class="right favorite">
+                                    <img src="/img/${ true ? "no-" : "" }favorite.png" alt="">
+                                </div>
                                 <h2>${ data.title }</h2>
                                 <div class="center-align">
                                     <iframe width="560" height="315" src="${ data.video.replace( "https://youtu.be/", "https://www.youtube.com/embed/" ) }" frameborder="0"
@@ -240,6 +261,47 @@ let Point = ( function () {
                     } );
                 }
             }
+        } );
+
+        // On click on favorite
+        $( document ).on( "click", ".favorite", ( elem ) => {
+            let userId = localStorage.getItem( "userId" );
+            let favStorage = localStorage.getItem( "fav" );
+            let $elem = $( elem.currentTarget );
+
+            if ( favStorage ) {
+                favStorage = JSON.parse( favStorage );
+            } else {
+                favStorage = {};
+            }
+
+            if ( $elem.data( "fav" ) === "true" ) {
+                favStorage[ $elem.data( "id" ) ] = false;
+                $elem.find( "img" ).attr( "src", "/img/no-favorite.png" );
+                $elem.data( "fav", "false" );
+                $.ajax( {
+                    url: "/api/user/favorite-delete",
+                    method: "POST",
+                    data: {
+                        "id_user": userId,
+                        "id_exercise": $elem.data( "id" )
+                    }
+                } );
+            } else {
+                favStorage[ $elem.data( "id" ) ] = true;
+                $elem.data( "fav", "true" );
+                $elem.find( "img" ).attr( "src", "/img/favorite.png" );
+                $.ajax( {
+                    url: "/api/user/favorite-add",
+                    method: "POST",
+                    data: {
+                        "id_user": userId,
+                        "id_exercise": $elem.data( "id" )
+                    }
+                } );
+            }
+
+            localStorage.setItem( "fav", JSON.stringify( favStorage ) );
         } );
     };
 
