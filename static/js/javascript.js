@@ -66,7 +66,6 @@ let Point = ( function () {
     let proto = Point.prototype;
 
     proto.addSpecificCSS = function () {
-        console.log( "Point addSpecificCSS" );
         let css = `<style id="point-css">`;
 
         for ( let conf of this.config ) {
