@@ -122,7 +122,11 @@ let Point = ( function () {
         // Click on a point not selected
         $( document ).on( "click", ".point:not(.selected)", ( elem ) => {
             let $elem = $( elem.target );
+            let storageData = localStorage.getItem( "muscles" );
 
+            if ( storageData ) {
+                storageData = JSON.parse( storageData );
+            }
             $( ".point" ).each( ( i, e ) => {
                 let $e = $( e );
 
@@ -131,27 +135,47 @@ let Point = ( function () {
 
             $elem.addClass( "selected" );
             $( "#exercise-title" ).text( $elem.attr( "title" ) );
-            $.ajax( {
-                url: "/api/muscles/get-list",
-                method: "POST",
-                data: {
-                    muscle: $elem.data( "name" )
-                },
-                success: function ( data ) {
-                    let c = $( "#exercises-container" );
+            if ( storageData && storageData[ $elem.data( "name" ) ] ) {
+                let data = storageData[ $elem.data( "name" ) ];
+                let c = $( "#exercises-container" );
 
-                    data = JSON.parse( data );
-                    localStorage.setItem( $elem.data( "name" ), data );
-                    c.empty();
-                    if ( data.length > 0 ) {
-                        for ( let exercise of data ) {
-                            c.append( `<div data-id="${ exercise.id }">${ exercise.title }</div>` );
-                        }
-                    } else {
-                        c.append( "<div>Please select a muscle</div>" );
+                c.empty();
+                if ( data.length > 0 ) {
+                    for ( let exercise of data ) {
+                        c.append( `<div data-id="${ exercise.id }">${ exercise.title }</div>` );
                     }
+                } else {
+                    c.append( "<div>Please select a muscle</div>" );
                 }
-            } );
+            } else {
+                $.ajax( {
+                    url: "/api/muscles/get-list",
+                    method: "POST",
+                    data: {
+                        muscle: $elem.data( "name" )
+                    },
+                    success: function ( data ) {
+                        data = JSON.parse( data );
+
+                        if ( storageData === null ) {
+                            storageData = {};
+                        }
+                        storageData[ $elem.data( "name" ) ] = data;
+                        localStorage.setItem( "muscles", JSON.stringify( storageData ) );
+
+                        let c = $( "#exercises-container" );
+
+                        c.empty();
+                        if ( data.length > 0 ) {
+                            for ( let exercise of data ) {
+                                c.append( `<div data-id="${ exercise.id }">${ exercise.title }</div>` );
+                            }
+                        } else {
+                            c.append( "<div>Please select a muscle</div>" );
+                        }
+                    }
+                } );
+            }
         } );
 
         // Click on a point selected
@@ -167,19 +191,19 @@ let Point = ( function () {
         // Click on an exercise
         $( document ).on( "click", "#exercises-container div", ( elem ) => {
             let $elem = $( elem.target );
+            let storageData = localStorage.getItem( "exercises" );
 
+            if ( storageData ) {
+                storageData = JSON.parse( storageData );
+            } else {
+                storageData = {};
+            }
             if ( $elem.data( "id" ) ) {
-                $.ajax( {
-                    url: "/api/muscles/get-exercise",
-                    method: "POST",
-                    data: {
-                        id: $elem.data( "id" ),
-                    },
-                    success: function ( data ) {
-                        data = JSON.parse( data );
-                        let main = $( "#main-container" );
+                if ( storageData[ $elem.data( "id" ) ] ) {
+                    let data = storageData[ $elem.data( "id" ) ];
+                    let main = $( "#main-container" );
 
-                        main.html( `
+                    main.html( `
                                 <h2>${ data.title }</h2>
                                 <div class="center-align">
                                     <iframe width="560" height="315" src="${ data.video.replace( "https://youtu.be/", "https://www.youtube.com/embed/" ) }" frameborder="0"
@@ -188,8 +212,33 @@ let Point = ( function () {
                                     <div class="exercise-info-container blue-grey lighten-4 left-align">${ ( data.description ? data.description : "" ) }</div>
                                 </div>
                         ` );
-                    }
-                } );
+                } else {
+                    $.ajax( {
+                        url: "/api/muscles/get-exercise",
+                        method: "POST",
+                        data: {
+                            id: $elem.data( "id" ),
+                        },
+                        success: function ( data ) {
+                            data = JSON.parse( data );
+
+                            storageData[ $elem.data( "id" ) ] = data;
+                            localStorage.setItem( "exercises", JSON.stringify( storageData ) );
+
+                            let main = $( "#main-container" );
+
+                            main.html( `
+                                <h2>${ data.title }</h2>
+                                <div class="center-align">
+                                    <iframe width="560" height="315" src="${ data.video.replace( "https://youtu.be/", "https://www.youtube.com/embed/" ) }" frameborder="0"
+                                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen></iframe>
+                                    <div class="exercise-info-container blue-grey lighten-4 left-align">${ ( data.description ? data.description : "" ) }</div>
+                                </div>
+                        ` );
+                        }
+                    } );
+                }
             }
         } );
     };

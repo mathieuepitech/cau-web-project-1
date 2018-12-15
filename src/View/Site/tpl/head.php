@@ -46,7 +46,7 @@
 <ul id="user" class="dropdown-content">
     <li><a id="change-name">Change Your Name</a></li>
     <li class="divider"></li>
-    <li><a>Your Saved Exercises</a></li>
+    <li><a>Your Exercises</a></li>
     <li class="divider"></li>
     <li><a>Your Training</a></li>
 </ul>
