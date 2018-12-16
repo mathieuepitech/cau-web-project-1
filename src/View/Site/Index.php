@@ -1,5 +1,5 @@
-<div class="row" style="margin-bottom: 0">
-    <div class="col l3 m4 s6 green lighten-1 white-text" style="height: 750px;">
+<div class="row" style="margin-bottom: 0; display: flex;">
+    <div class="col l3 m4 s6 green lighten-1 white-text" style="min-height: 750px;">
         <div class="row">
             <div class="col s12 center-align">
                 <h5 id="exercise-title">Selected part of the body</h5>

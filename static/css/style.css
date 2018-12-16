@@ -63,3 +63,7 @@
     height: 30px;
     cursor: pointer;
 }
+
+.center-align:last-child {
+    margin-bottom: 30px;
+}

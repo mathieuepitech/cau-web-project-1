@@ -3,8 +3,8 @@
 namespace WebProjectFitness;
 
 class Config {
-    const SITE_JS_VERSION = '1.03';
-    const SITE_CSS_VERSION = '1.03';
+    const SITE_JS_VERSION = '1.04';
+    const SITE_CSS_VERSION = '1.04';
 
     const TITLE_HEADER = 'Fitness';
     const DESCRIPTION_HEADER = 'Site for find all the fitness exercise you need';

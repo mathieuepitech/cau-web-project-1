@@ -12,7 +12,7 @@ date_default_timezone_set( 'Europe/Paris' );
 setlocale( LC_TIME, "fr_FR.UTF-8" );
 error_reporting( E_ALL );
 
-require( 'src/Lib/functions.php' );
+require( 'src/Lib/Functions.php' );
 require( 'src/Config.php' );
 
 require 'src/Autoloader.php';

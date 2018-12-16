@@ -243,10 +243,11 @@ let Point = ( function () {
                             } else {
                                 favStorage = {};
                             }
+                            let fav = favStorage[ $elem.data( "id" ) ];
 
                             main.html( `
                                 <div data-id="${ $elem.data( "id" ) }" data-fav="false" class="right favorite">
-                                    <img src="/img/${ true ? "no-" : "" }favorite.png" alt="">
+                                    <img src="/img/${ fav ? "" : "no-" }favorite.png" alt="">
                                 </div>
                                 <h2>${ data.title }</h2>
                                 <div class="center-align">
@@ -343,7 +344,7 @@ $( document ).ready( () => {
         $( "a[data-target=user]" ).html( userName + `<i class="material-icons right">arrow_drop_down</i>` );
     }
 
-    $( document ).on( "click", "#change-name", function () {
+    $( document ).on( "click", "#change-name", () => {
         let modal = $( "#modal" );
 
         modal.find( ".md-title" ).text( "Change Your Name" );
@@ -380,6 +381,43 @@ $( document ).ready( () => {
             modal.find( ".md-container" ).empty();
         } );
         modal.addClass( "md-show" );
+    } );
+
+    $( document ).on( "click", "#your-exercise", function () {
+        let favStorage = localStorage.getItem( "fav" );
+        let exercisesStorage = localStorage.getItem( "exercises" );
+        let main = $( "#main-container" );
+
+        main.empty();
+        if ( favStorage ) {
+            localStorage = JSON.parse( favStorage );
+            console.log( favStorage );
+            if ( exercisesStorage ) {
+                exercisesStorage = JSON.parse( exercisesStorage );
+            }
+            for ( let id in favStorage ) {
+                if ( favStorage.hasOwnProperty( id ) ) {
+                    if ( favStorage[ id ] ) {
+                        if ( exercisesStorage.hasOwnProperty( id ) ) {
+                            main.append( `
+                                <div data-id="${ id }" data-fav="false" class="right favorite">
+                                    <img src="/img/favorite.png" alt="">
+                                </div>
+                                <h2>${ exercisesStorage[ id ].title }</h2>
+                                <div class="center-align">
+                                    <iframe width="560" height="315" src="${ exercisesStorage[ id ].video.replace( "https://youtu.be/", "https://www.youtube.com/embed/" ) }" frameborder="0"
+                                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen></iframe>
+                                    <div class="exercise-info-container blue-grey lighten-4 left-align">${ ( exercisesStorage[ id ].description ? exercisesStorage[ id ].description : "" ) }</div>
+                                </div>
+                            ` );
+                        }
+                    }
+                }
+            }
+        } else {
+
+        }
     } );
 
 } );

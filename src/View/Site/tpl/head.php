@@ -44,11 +44,11 @@
 <body class="grey lighten-4">
 
 <ul id="user" class="dropdown-content">
-    <li><a id="change-name">Change Your Name</a></li>
+    <li id="change-name"><a>Change Your Name</a></li>
     <li class="divider"></li>
-    <li><a>Your Exercises</a></li>
-    <li class="divider"></li>
-    <li><a>Your Training</a></li>
+    <li id="your-exercise"><a>Your Exercises</a></li>
+    <!--    <li class="divider"></li>-->
+    <!--    <li><a>Your Training</a></li>-->
 </ul>
 
 <div class="navbar-fixed">
