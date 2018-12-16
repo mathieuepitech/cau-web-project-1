@@ -246,7 +246,7 @@ let Point = ( function () {
                             let fav = favStorage[ $elem.data( "id" ) ];
 
                             main.html( `
-                                <div data-id="${ $elem.data( "id" ) }" data-fav="false" class="right favorite">
+                                <div data-id="${ $elem.data( "id" ) }" data-fav="${ fav ? "true" : "false" }" class="right favorite">
                                     <img src="/img/${ fav ? "" : "no-" }favorite.png" alt="">
                                 </div>
                                 <h2>${ data.title }</h2>
@@ -275,10 +275,11 @@ let Point = ( function () {
                 favStorage = {};
             }
 
-            if ( $elem.data( "fav" ) === "true" ) {
+            console.log( $elem );
+            if ( $elem.attr( "data-fav" ) === "true" ) {
                 favStorage[ $elem.data( "id" ) ] = false;
                 $elem.find( "img" ).attr( "src", "/img/no-favorite.png" );
-                $elem.data( "fav", "false" );
+                $elem.attr( "data-fav", "false" );
                 $.ajax( {
                     url: "/api/user/favorite-delete",
                     method: "POST",
@@ -289,7 +290,7 @@ let Point = ( function () {
                 } );
             } else {
                 favStorage[ $elem.data( "id" ) ] = true;
-                $elem.data( "fav", "true" );
+                $elem.attr( "data-fav", "true" );
                 $elem.find( "img" ).attr( "src", "/img/favorite.png" );
                 $.ajax( {
                     url: "/api/user/favorite-add",
@@ -400,7 +401,7 @@ $( document ).ready( () => {
                     if ( favStorage[ id ] ) {
                         if ( exercisesStorage.hasOwnProperty( id ) ) {
                             main.append( `
-                                <div data-id="${ id }" data-fav="false" class="right favorite">
+                                <div data-id="${ id }" data-fav="true" class="right favorite">
                                     <img src="/img/favorite.png" alt="">
                                 </div>
                                 <h2>${ exercisesStorage[ id ].title }</h2>
