@@ -21,7 +21,7 @@
 <footer class="page-footer green darken-3">
     <div class="footer-copyright">
         <div class="container">
-            Made by <a class="blue-text text-lighten-3" target="_blank" href="https://www.sanchez-mathieu.fr">Mathieu
+            Made by <a class="blue-text text-lighten-3" target="_blank" href="https://www.sanchezm.fr">Mathieu
                 Sanchez</a>, Pablo Berenguel, Anthony Andrianjatovo and Najib Kardjoudj
         </div>
     </div>
